@@ -15,10 +15,11 @@ int main()
 
 
 	Joueurs Skymble("Skymble",2);
-	Joueurs Andreas("Andreas",2);
+	Joueurs Andreas("Andreas",1);
 	while(!Skymble.conditionVictoire(p))
 	{
 		Skymble.joue(p);
+	//	Andreas.joue(p);
 		jouerIA(p,2);
 		p.display();
 	}
