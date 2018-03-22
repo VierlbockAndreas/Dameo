@@ -51,36 +51,45 @@ void Joueurs::deplacementCurseur(int & X, int & Y,Plateau p)
 		switch(getch())
 		{
 	    case 'z': cout << "haut" << endl;   // haut
-					X-=1;
+					if(X > 0)
+						X-=1;
 	        break;
 			case 'Z': cout << "haut" << endl;   // haut
-					X -= 1;
+					if(X > 0)
+						X -= 1;
 	        break;
 	    case 's': cout << "bas" << endl;   // bas
-					X+=1;
+					if(X < p.getSize()-1)
+						X+=1;
 	        break;
 			case 'S': cout << "bas" << endl;   // bas
-					X+=1;
+					if(X < p.getSize()-1)
+						X+=1;
 					break;
 	    case 'd': cout << "droite" << endl;   // droite
-					Y+=1;
+					if(Y < p.getSize()-1)
+						Y+=1;
 	        break;
 			case 'D': cout << "droite" << endl;   // droite
-					Y+=1;
+					if(Y < p.getSize()-1)
+						Y+=1;
 	        break;
 	    case 'q': cout << "gauche" << endl;   // gauche
-					Y-=1;
+					if(Y > 0)
+						Y-=1;
 	        break;
 			case 'Q': cout << "gauche" << endl;   // gauche
-					Y-=1;
+					if(Y > 0)
+						Y-=1;
 					break;
 			case 'p': cout << "posé" << endl;
-					if(X >= 0 && X < p.getSize() && Y >=0 && Y < p.getSize() && verifNum(X,Y,p)){ continu = false;}
+					if(X >= 0 && X < p.getSize()-1 && Y >=0 && Y < p.getSize() && verifNum(X,Y,p)){ continu = false;}
 					break;
 			case 'P': cout << "posé" << endl;
 					if(X >= 0 && X < p.getSize() && Y >=0 && Y < p.getSize()  && verifNum(X,Y,p)){ continu = false;}
 					break;
 		}
+
 		p.display(X,Y);
 	}
 }

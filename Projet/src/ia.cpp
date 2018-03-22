@@ -10,7 +10,7 @@ int eval(Plateau & p);
 
 bool verifieAvant(int i, int j, Plateau p)
 {
-    if(p.tableau[i][j] == 1 && p.tableau[i+1][j] == 0)
+    if(i < p.getSize()-1 && p.tableau[i][j] == 1 && p.tableau[i+1][j] == 0)
       return true;
     return false;
 }
@@ -29,7 +29,7 @@ void annuleAvant(int i,int j, Plateau & p)
 
 bool verifieDroite(int i, int j, Plateau p)
 {
-  if(p.tableau[i][j] == 1 && p.tableau[i+1][j+1] == 0)
+  if(i < p.getSize()-1 && p.tableau[i][j] == 1 && p.tableau[i+1][j+1] == 0)
     return true;
   return false;
 }
@@ -48,7 +48,7 @@ void annuleDroite(int i, int j, Plateau & p)
 
 bool verifieGauche(int i, int j, Plateau p)
 {
-  if(p.tableau[i][j] == 1 && p.tableau[i+1][j-1] == 0)
+  if(i < p.getSize()-1 && p.tableau[i][j] == 1 && p.tableau[i+1][j-1] == 0)
     return true;
   return false;
 }
@@ -159,14 +159,51 @@ int Max(Plateau & p, int profondeur)
            annuleGauche(i,j,p);
         }
       }
-
     }
   }
 return max;
 }
 
+bool gagnant(Plateau p)
+{
+  int cpt = 0;
+  for(int i=0;i<p.tableau.size();i++)
+  {
+    for(int j=0;j<p.tableau.size();j++)
+    {
+      if(p.tableau[i][j] == 2)
+        cpt+=1;
+    }
+  }
+  if(cpt == 0)
+    return true;
+  return false;
+}
+
+bool perdant(Plateau p)
+{
+  int cpt = 0;
+  for(int i=0;i<p.tableau.size();i++)
+  {
+    for(int j=0;j<p.tableau.size();j++)
+    {
+      if(p.tableau[i][j] == 1)
+        cpt+=1;
+    }
+  }
+  if(cpt == 0)
+    return true;
+  return false;
+}
+
 int eval(Plateau & p)
 {
+  if(gagnant(p))
+    return 9999;
+  if(perdant(p))
+    return -9999;
+
+
 
 }
 
@@ -178,6 +215,9 @@ void jouerIA(Plateau & p, int profondeur)
   int maxj;
   int i;
   int j;
+  int action;
+
+  cerr << "premier drapeau" << endl;
 
   for(i=0;i < p.tableau.size(); i++)
   {
@@ -190,13 +230,14 @@ void jouerIA(Plateau & p, int profondeur)
 
         if(tmp > max)
         {
+          action = 1;
           max = tmp;
           maxi = i;
           maxj = j;
         }
         annuleAvant(i,j,p);
       }
-
+cerr << "deuxieme drapeau" << endl;
       if(verifieDroite(i,j,p))
       {
         aDroite(i,j,p);
@@ -204,6 +245,7 @@ void jouerIA(Plateau & p, int profondeur)
 
         if(tmp > max)
         {
+          action = 2;
           max = tmp;
           maxi = i;
           maxj = j;
@@ -217,6 +259,7 @@ void jouerIA(Plateau & p, int profondeur)
 
         if(tmp > max)
         {
+          action = 3;
           max = tmp;
           maxi = i;
           maxj = j;
@@ -225,11 +268,13 @@ void jouerIA(Plateau & p, int profondeur)
       }
     }
   }
+  cerr << "troisieme drapeau" << endl;
   p.tableau[maxi][maxj] = 1;
-  if(p.tableau[maxi - 1][j] == 1)
+  if(action == 1)
     p.tableau[maxi-1][j] = 0;
-  else if(p.tableau[maxi-1][j+1])
+  else if(action == 2)
     p.tableau[maxi-1][j+1] = 0;
-  else if(p.tableau[maxi-1][j-1])
+  else if(action == 3)
     p.tableau[maxi-1][j-1] = 0;
+  cerr << "quatrieme drapeau" << endl;
 }

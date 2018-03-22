@@ -6,6 +6,7 @@ using namespace std;
 bool verifieAvant(int,int,Plateau);
 void enAvant(int,int,Plateau&);
 void aGauche(int,int,Plateau&);
+void jouerIA(Plateau & p, int profondeur);
 
 int main()
 {
@@ -22,7 +23,7 @@ int main()
 	}
 */
 
-	aGauche(1,1,p);
+	jouerIA(p,2);
 	p.display();
 	return 0;
 }
