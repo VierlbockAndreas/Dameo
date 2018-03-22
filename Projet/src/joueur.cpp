@@ -372,33 +372,33 @@ bool Joueurs::verifMangeRoi(int curseurX, int curseurY, int nouveauX, int nouvea
 			}
 			return true;
 		}
-		else if(nouveauY - curseurY == curseurX - nouveauX)	// Diagonale haut droite
-		{
-			int tmpX = nouveauX;
-			int tmpY = nouveauY;
-			while(tmpX < curseurX && tmpY < curseurY)
-			{
-				if((p.tableau[tmpX][tmpY] == 2 || p.tableau[tmpX][tmpY] == 4) && (p.tableau[tmpX+1][tmpY+1] != 0))
-					return false;
-				tmpX+=1;
-				tmpY+=1;
-			}
-			return true;
-		}
-		else if(nouveauY - curseurY == curseurX - nouveauX && nouveauX<curseurX)				// Diagonale haut gauche
+		else if(nouveauX < curseurX && nouveauY > curseurY)	// Diagonale haut droite
 		{
 			int tmpX = nouveauX;
 			int tmpY = nouveauY;
 			while(tmpX < curseurX && tmpY > curseurY)
 			{
-				if((p.tableau[tmpX][tmpY] == 2 || p.tableau[tmpX][tmpY] == 4) && ((p.tableau[tmpX+1][tmpY-1] != 0)))
+				if((p.tableau[tmpX][tmpY] == 2 || p.tableau[tmpX][tmpY] == 4) && (p.tableau[tmpX+1][tmpY+1] != 0))
 					return false;
 				tmpX+=1;
 				tmpY-=1;
 			}
 			return true;
 		}
-		else if(nouveauX - curseurX == curseurY - nouveauY)		// Diagonale bas gauche
+		else if(nouveauX < curseurX && nouveauY < curseurY)				// Diagonale haut gauche
+		{
+			int tmpX = nouveauX;
+			int tmpY = nouveauY;
+			while(tmpX < curseurX && tmpY < curseurY)
+			{
+				if((p.tableau[tmpX][tmpY] == 2 || p.tableau[tmpX][tmpY] == 4) && ((p.tableau[tmpX+1][tmpY-1] != 0)))
+					return false;
+				tmpX+=1;
+				tmpY+=1;
+			}
+			return true;
+		}
+		else if(nouveauX > curseurX && nouveauY < curseurY)		// Diagonale bas gauche
 		{
 			int tmpX = nouveauX;
 			int tmpY = nouveauY;
@@ -411,7 +411,7 @@ bool Joueurs::verifMangeRoi(int curseurX, int curseurY, int nouveauX, int nouvea
 			}
 			return true;
 		}
-		else if(curseurX < nouveauX && curseurY < nouveauY)		// Diagonale bas droite
+		else if(nouveauX > curseurX && nouveauY < curseurY)		// Diagonale bas droite
 		{
 			int tmpX = curseurX;
 			int tmpY = curseurY;
@@ -419,7 +419,7 @@ bool Joueurs::verifMangeRoi(int curseurX, int curseurY, int nouveauX, int nouvea
 			{
 				if((p.tableau[tmpX][tmpY] == 2 || p.tableau[tmpX][tmpY] == 4) && ((p.tableau[tmpX+1][tmpY+1] != 0)))
 					return false;
-				tmpX+=1;
+				tmpX-=1;
 				tmpY+=1;
 			}
 			return true;
@@ -578,11 +578,11 @@ void Joueurs::mangeRoi(int curseurX, int curseurY, int nouveauX, int nouveauY, P
 			tmpY -= 1;
 		}
 	}
-	else if(nouveauY - curseurY == curseurX - nouveauX)	// Diagonale haut droite
+	else if(nouveauX < curseurX && nouveauY < curseurY)	// Diagonale haut gauche
 	{
 		int tmpX = nouveauX;
 		int tmpY = nouveauY;
-		while(tmpX < curseurX && tmpY > curseurY)
+		while(tmpX < curseurX && tmpY < curseurY)
 		{
 			cout << "dd" << endl;
 			p.tableau[tmpX][tmpY] = 0;
@@ -590,18 +590,18 @@ void Joueurs::mangeRoi(int curseurX, int curseurY, int nouveauX, int nouveauY, P
 			tmpY+=1;
 		}
 	}
-	else if(nouveauY - curseurY == curseurX - nouveauX && nouveauX<curseurX)				// Diagonale haut gauche
+	else if(nouveauX < curseurX && nouveauY > curseurY)				// Diagonale haut droite
 	{
 		int tmpX = nouveauX;
 		int tmpY = nouveauY;
-		while(tmpX < curseurX && tmpY > curseurY)
+		while(tmpX < curseurX && tmpY < curseurY)
 		{
 			p.tableau[tmpX][tmpY] = 0;
 			tmpX+=1;
 			tmpY-=1;
 		}
 	}
-	else if(nouveauX - curseurX == curseurY - nouveauY)		// Diagonale bas gauche
+	else if(nouveauX > curseurX && nouveauY < curseurY)		// Diagonale bas gauche
 	{
 		int tmpX = nouveauX;
 		int tmpY = nouveauY;
@@ -612,14 +612,14 @@ void Joueurs::mangeRoi(int curseurX, int curseurY, int nouveauX, int nouveauY, P
 			tmpY+=1;
 		}
 	}
-	else if(curseurX < nouveauX && curseurY < nouveauY)		// Diagonale bas droite
+	else if(nouveauX > curseurX && nouveauY < curseurY)		// Diagonale bas droite
 	{
-		int tmpX = curseurX;
-		int tmpY = curseurY;
-		while(tmpX<nouveauX && tmpY<nouveauY)
+		int tmpX = nouveauX;
+		int tmpY = nouveauX;
+		while(tmpX>curseurX && tmpY<curseurY)
 		{
 			p.tableau[tmpX][tmpY] = 0;
-			tmpX+=1;
+			tmpX-=1;
 			tmpY+=1;
 		}
 	}
