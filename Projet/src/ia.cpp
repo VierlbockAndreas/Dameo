@@ -198,10 +198,12 @@ bool perdant(Plateau p)
 
 int eval(Plateau & p)
 {
-  if(gagnant(p))
-    return 9999;
   if(perdant(p))
-    return -9999;
+ return -9999;
+else if(gagnant(p))
+ return 9999;
+else
+  return 0;
 
 
 
@@ -210,14 +212,12 @@ int eval(Plateau & p)
 void jouerIA(Plateau & p, int profondeur)
 {
   int max = -99999;
-  int tmp;
-  int maxi;
-  int maxj;
+  int tmp = 0;
+  int maxi = 0;
+  int maxj = 0;
   int i;
   int j;
-  int action;
-
-  cerr << "premier drapeau" << endl;
+  int action = 0;
 
   for(i=0;i < p.tableau.size(); i++)
   {
@@ -227,28 +227,27 @@ void jouerIA(Plateau & p, int profondeur)
       {
         enAvant(i,j,p);
         tmp = Min(p,profondeur-1);
-
+        cout << "verifAvant tmp = " << tmp << endl;
         if(tmp > max)
         {
           action = 1;
           max = tmp;
-          maxi = i;
+          maxi = i+1;
           maxj = j;
         }
         annuleAvant(i,j,p);
       }
-cerr << "deuxieme drapeau" << endl;
       if(verifieDroite(i,j,p))
       {
         aDroite(i,j,p);
         tmp = Min(p,profondeur-1);
-
+        cout << "verifDroite tmp = " << tmp << endl;
         if(tmp > max)
         {
           action = 2;
           max = tmp;
-          maxi = i;
-          maxj = j;
+          maxi = i+1;
+          maxj = j+1;
         }
         annuleDroite(i,j,p);
       }
@@ -256,25 +255,30 @@ cerr << "deuxieme drapeau" << endl;
       {
         aGauche(i,j,p);
         tmp = Min(p,profondeur-1);
-
+        cout << "verifGauche tmp = " << tmp << endl;
         if(tmp > max)
         {
           action = 3;
           max = tmp;
-          maxi = i;
-          maxj = j;
+          maxi = i+1;
+          maxj = j-1;
         }
         annuleGauche(i,j,p);
       }
     }
   }
-  cerr << "troisieme drapeau" << endl;
+  cerr << "maxi "  << maxi << endl;
+  cerr << "maxj " << maxj << endl;
+  cerr << "action " << action<< endl;
   p.tableau[maxi][maxj] = 1;
   if(action == 1)
-    p.tableau[maxi-1][j] = 0;
+  {
+    p.tableau[maxi-1][maxj] = 0;
+    cout << "action == 1 toi meme tu sais" << endl;
+  }
+
   else if(action == 2)
-    p.tableau[maxi-1][j+1] = 0;
+    p.tableau[maxi-1][maxj-1] = 0;
   else if(action == 3)
-    p.tableau[maxi-1][j-1] = 0;
-  cerr << "quatrieme drapeau" << endl;
+    p.tableau[maxi-1][maxj+1] = 0;
 }

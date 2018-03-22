@@ -13,18 +13,19 @@ int main()
 	Plateau p;
 	p.initialise();
 
-/*
-	Joueurs Skymble("Skymble",1);
+
+	Joueurs Skymble("Skymble",2);
 	Joueurs Andreas("Andreas",2);
 	while(!Skymble.conditionVictoire(p))
 	{
 		Skymble.joue(p);
-		Andreas.joue(p);
+		jouerIA(p,2);
+		p.display();
 	}
-*/
 
-	jouerIA(p,2);
-	p.display();
+
+
+
 	return 0;
 }
 
