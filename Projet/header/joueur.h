@@ -29,6 +29,8 @@ public:
 	bool verifMangeRoi(int curseurX, int curseurY, int nouveauX, int nouveauY, Plateau p);
 	void mangeRoi(int curseurX, int curseurY, int nouveauX, int nouveauY, Plateau & p);
 	bool conditionVictoire(Plateau);
+	bool verifLigne(int curseurX, int curseurY,int nouveauX, int nouveauY, Plateau p);
+	void moveLigne(int curseurX, int curseurY, int nouveauX, int nouveauY, Plateau & p);
 
 };
 #endif

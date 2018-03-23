@@ -83,7 +83,7 @@ void Joueurs::deplacementCurseur(int & X, int & Y,Plateau p)
 						Y-=1;
 					break;
 			case 'p': cout << "posé" << endl;
-					if(X >= 0 && X < p.getSize()-1 && Y >=0 && Y < p.getSize() && verifNum(X,Y,p)){ continu = false;}
+					if(X >= 0 && X < p.getSize() && Y >=0 && Y < p.getSize() && verifNum(X,Y,p)){ continu = false;}
 					break;
 			case 'P': cout << "posé" << endl;
 					if(X >= 0 && X < p.getSize() && Y >=0 && Y < p.getSize()  && verifNum(X,Y,p)){ continu = false;}
@@ -180,9 +180,176 @@ bool Joueurs::verifMange(int curseurX, int curseurY, int nouveauX, int nouveauY,
 		return false;
 }
 
+bool Joueurs::verifLigne(int curseurX, int curseurY,int nouveauX, int nouveauY, Plateau p)
+{
+	if(p.tableau[nouveauX][nouveauY] == numero)
+	{
+		int tmpX = nouveauX;
+		int tmpY = nouveauY;
+		if(numero == 1)
+		{
+			if(nouveauX == curseurX+1)
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX += 1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;			
+			}
+			else if(nouveauX == curseurX+1 && nouveauY == curseurY+1)
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX += 1;
+					tmpY += 1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;
+			}
+			else if(nouveauX == curseurX+1 && nouveauY == curseurY-1)
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX += 1;
+					tmpY -= 1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;
+			}
+		}
+		if(numero == 2)
+		{
+			if((nouveauX == curseurX-1))
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX -= 1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;
+			}
+			else if(nouveauX == curseurX-1 && nouveauY == curseurY+1)
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX -= 1;
+					tmpY+=1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;
+			}
+			else if(nouveauX == curseurX-1 && nouveauY == curseurY-1)
+			{
+				while(p.tableau[tmpX][tmpY] == numero)
+				{
+					tmpX -= 1;
+					tmpY-=1;
+				}
+				if(p.tableau[tmpX][tmpY] == 0)
+					return true;
+			}
+		}
+	}
+	return false;
+}
+
+void Joueurs::moveLigne(int curseurX, int curseurY, int nouveauX, int nouveauY, Plateau & p)
+{
+
+	int tmpX = nouveauX;
+	int tmpY = nouveauY;
+	if(numero == 1)
+	{
+
+		if(nouveauX == curseurX+1 && nouveauY == curseurY)
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX += 1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}			
+		}
+		else if(nouveauX == curseurX+1 && nouveauY == curseurY+1)
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX += 1;
+				tmpY += 1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}	
+		}
+		else if(nouveauX == curseurX+1 && nouveauY == curseurY-1)
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX += 1;
+				tmpY -= 1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}	
+		}
+	}
+	if(numero == 2)
+	{
+		if((nouveauX == curseurX-1 && nouveauY == curseurY))
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX -= 1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}
+		}
+		else if(nouveauX == curseurX-1 && nouveauY == curseurY+1)
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX -= 1;
+				tmpY+=1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}
+		}
+		else if(nouveauX == curseurX-1 && nouveauY == curseurY-1)
+		{
+			while(p.tableau[tmpX][tmpY] == numero)
+			{
+				tmpX -= 1;
+				tmpY-=1;
+			}
+			if(p.tableau[tmpX][tmpY] == 0)
+			{
+				p.tableau[tmpX][tmpY] = numero;
+				p.tableau[curseurX][curseurY] = 0;
+			}
+		}
+	}
+}
+
+
 bool Joueurs::verifMove(int curseurX, int curseurY, int nouveauX, int nouveauY, Plateau p)
 {
-	if(numero == 1 && p.tableau[nouveauX][nouveauY] == 0 && ((nouveauX == curseurX+1 )))
+	if(verifLigne(curseurX,curseurY,nouveauX,nouveauY,p))
+		return true;
+	else if(numero == 1 && p.tableau[nouveauX][nouveauY] == 0 && ((nouveauX == curseurX+1 )))
 		return true;
 	else if(numero == 1 && p.tableau[nouveauX][nouveauY] == 0  && (nouveauX == curseurX+1 && nouveauY == curseurY+1))
 		return true;
@@ -759,8 +926,15 @@ void Joueurs::joue(Plateau & p)
 					promoteToKing(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p);
 			}
 			else if(verifMove(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p))
-			{
-				move(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p);
+			{	
+				if(verifLigne(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p))
+				{
+					moveLigne(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p);
+				}
+					
+				else
+					move(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p);
+
 				if(verifPromote(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p))
 					promoteToKing(curseurX,curseurY,nouvellePlaceX,nouvellePlaceY,p);
 				p.display();
