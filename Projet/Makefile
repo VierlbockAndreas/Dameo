@@ -17,5 +17,5 @@ obj/main.o: src/main.cpp header/joueur.h
 clean:
 	rm -rf obj/*.o
 
-mrproper: cleania
+mrproper: clean
 	rm -rf bin/dameo
