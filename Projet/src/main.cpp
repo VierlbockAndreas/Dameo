@@ -13,16 +13,15 @@ int main()
 	Plateau p;
 	p.initialise();
 
-
 	Joueurs Skymble("Skymble",2);
 	Joueurs Andreas("Andreas",1);
 //	cout << Andreas.verifLigne(0, 0,1,0,p) << endl;
 	while(!Skymble.conditionVictoire(p))
 	{
-//		Andreas.joue(p);
+		Andreas.joue(p);
 		Skymble.joue(p);
 		
-		jouerIA(p,2);
+		jouerIA(p,1);
 		p.display();
 	}
 
