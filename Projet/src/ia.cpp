@@ -8,8 +8,6 @@ int Max(Plateau & p,int profondeur);
 int eval(Plateau & p);
 
 
-// EN AVANT
-
 bool verifieAvant(int i, int j, Plateau p)
 {
     if(i < p.getSize()-1 && p.tableau[i][j] == 1 && p.tableau[i+1][j] == 0)
@@ -28,9 +26,6 @@ void annuleAvant(int i,int j, Plateau & p)
   p.tableau[i+1][j] = 0;
   p.tableau[i][j] = 1;
 }
-
-
-// A DROITE
 
 bool verifieDroite(int i, int j, Plateau p)
 {
@@ -51,9 +46,6 @@ void annuleDroite(int i, int j, Plateau & p)
   p.tableau[i][j] = 1;
 }
 
-
-// A GAUCHE
-
 bool verifieGauche(int i, int j, Plateau p)
 {
   if(i < p.getSize()-1 && p.tableau[i][j] == 1 && p.tableau[i+1][j-1] == 0)
@@ -73,10 +65,35 @@ void annuleGauche(int i, int j, Plateau & p)
   p.tableau[i][j] = 1;
 }
 
+bool verifieMange(int i, int j, Plateau & p)
+{
+  if(p.tableau[i-1][j] == 2 && p.tableau[i-2][j] == 0)
+    return true;
+  else if(p.tableau[i+1][j] == 2 && p.tableau[i+2][j] == 0)
+    return true;
+  else if(p.tableau[i][j-1] == 2 && p.tableau[i][j-2] == 0)
+    return true;
+  else if(p.tableau[i][j+1] == 2 && p.tableau[i][j+2] == 0)
+    return true;
+  else
+    return false;
+}
 
-
-/* MIN MAX EVAL STAAAAAAAAAART */
-
+void mange(int i, int j, Plateau & p)
+{
+  if(p.tableau[i-1][j] == 2 && p.tableau[i-2][j] == 0)
+  {
+    p.tableau[i][j] = 0;
+    p.tableau[i-1][j] = 0;
+    p.tableau[i-2][j] = 1;
+  }
+  else if(p.tableau[i+1][j] == 2 && p.tableau[i+2][j] == 0)
+  {
+    p.tableau[i][j] = 0;
+    p.tableau[i+1][j] = 0;
+    p.tableau[i+2][j] = 1;
+  }
+}
 
 int Min(Plateau & p,int profondeur)
 {
@@ -193,20 +210,6 @@ bool gagnant(Plateau p)
   return false;
 }
 
-int nbr_pions(Plateau p)
-{
-  int nbr = 0;
-  for(int i = 0; i < p.tableau.size(); i++)
-  {
-    for(int j = 0; j < p.getSize(); j++)
-    {
-      if(p.tableau[i][j] == 1)
-        nbr += 1;
-    }
-  }
-  return nbr;
-}
-
 bool perdant(Plateau p)
 {
   int cpt = 0;
@@ -230,7 +233,7 @@ int eval(Plateau & p)
 else if(gagnant(p))
  return 9999;
 else
-  return nbr_pions(p);
+  return 0;
 
 
 

@@ -13,15 +13,14 @@ int main()
 	Plateau p;
 	p.initialise();
 
+
 	Joueurs Skymble("Skymble",2);
 	Joueurs Andreas("Andreas",1);
-//	cout << Andreas.verifLigne(0, 0,1,0,p) << endl;
 	while(!Skymble.conditionVictoire(p))
 	{
-		Andreas.joue(p);
 		Skymble.joue(p);
-		
-		jouerIA(p,1);
+	//	Andreas.joue(p);
+		jouerIA(p,2);
 		p.display();
 	}
 
@@ -30,3 +29,21 @@ int main()
 
 	return 0;
 }
+
+/*
+
+else if(numero == 1 && p.tableau[nouveauX][nouveauY] == 0  && (nouveauX == curseurX+1 && nouveauY == curseurY+1))
+	return true;
+
+else if(numero == 1 && p.tableau[nouveauX][nouveauY] == 0  && (nouveauX == curseurX+1 && nouveauY == curseurY-1) )
+	return true;
+
+
+else if(numero == 2 && p.tableau[nouveauX][nouveauY] == 0  && (nouveauX == curseurX-1 && nouveauY == curseurY+1))
+	return true;
+else if(numero == 2 && p.tableau[nouveauX][nouveauY] == 0  && (nouveauX == curseurX-1 && nouveauY == curseurY-1) )
+	return true;
+else
+	return false;
+
+	*/
